@@ -21,8 +21,9 @@
               <span>Dashboard</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/"><el-icon><Odometer /></el-icon>首页</el-menu-item>
+              <el-menu-item index="/dashboard"><el-icon><Odometer /></el-icon>首页</el-menu-item>
               <el-menu-item index="/add"><el-icon><Plus /></el-icon>添加商品</el-menu-item>
+              <el-menu-item index="/sound-product"><el-icon><Music /></el-icon>声音产品</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
            <el-sub-menu index="2">
@@ -77,6 +78,7 @@ import { useRouter } from 'vue-router'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import { localGet, pathMap } from '@/utils'
+import { Odometer, Plus, Picture, StarFilled, Sell, ShoppingCart, Menu, Goods, User, List, Lock } from '@element-plus/icons-vue'
 
 const noMenu = ['/login']
 const router = useRouter()

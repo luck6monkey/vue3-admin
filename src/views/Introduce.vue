@@ -1,92 +1,288 @@
 <template>
-  <el-card class="account-container">
-    <h1>系统简介</h1>
-    <div style="line-height: 30px">
-      vue3-admin 是一套企业级后台管理系统，基于 Spring Boot 、Vue 3.0 相关技术栈开发，供各位开发者们体验和学习，一定给你最好的学习体验。
+  <div class="product-browse-container">
+    <!-- 轮播图部分 -->
+    <div class="swiper-section">
+      <el-carousel height="400px" indicator-position="outside">
+        <el-carousel-item v-for="item in 5" :key="item">
+          <div class="carousel-item">
+            <img :src="`https://picsum.photos/1200/400?random=${item}`" alt="轮播图${item}">
+            <div class="carousel-text">
+              <h3>商品轮播图 {{ item }}</h3>
+              <p>展示精美的商品图片</p>
+            </div>
+          </div>
+        </el-carousel-item>
+      </el-carousel>
     </div>
-    <img style="width: 70%;
-      display: block;
-      margin: 0 auto;" src="https://s.yezgea02.com/1616331765416/WechatIMG40038.png" alt="">
-    <h1>开发及部署文档</h1>
-    <img style="width: 70%;
-      display: block;
-      margin: 0 auto;" src="https://s.yezgea02.com/1616938239101/419241616938196_.pic.jpg" />
-    <ul class="course" @click="goJuejin">
-      <li>开篇词：通关Vue3.0 企业级项目开发，升职加薪快人一步</li>
-      <li>项目须知与课程约定</li>
-      <li>大势所趋：“前后端分离”开发模式</li>
-      <li>Vue 3.0 简介及开发环境搭建</li>
-      <li>Vue 3.0 组合 API 入口 Setup 浅析</li>
-      <li>Vue 3.0 之响应式系统 API</li>
-      <li>Vue 3.0 之生命周期钩子函数、提供注入</li>
-      <li>Vue 3.0 性能和业务层面上的提升</li>
-      <li>Vite 2.0 原理分析及简单插件编写</li>
-      <li>Vue-Router 4.x 使用方法及路由原理</li>
-      <li>Vue 3.0 实战项目启动篇</li>
-      <li>技术选型之 Spring Boot</li>
-      <li>后端开发环境搭建</li>
-      <li>快速搭建一个 Spring Boot 项目</li>
-      <li>Spring Boot 实践之 Web 功能开发</li>
-      <li>Spring Boot 实践之文件上传处理</li>
-      <li>Spring Boot 实践之整合 MyBatis 操作数据库</li>
-      <li>Spring Boot 实践之整合 Lombok</li>
-      <li>Spring Boot 实践之整合 Swagger 生成接口文档</li>
-      <li>后端 API 项目启动和运行注意事项</li>
-    </ul>
-    <ul class="course" @click="goJuejin">
-      <li>接口参数处理和统一响应结果处理</li>
-      <li>API 接口开发实战之用户登录接口开发</li>
-      <li>API 接口开发实战之用户身份认证详解</li>
-      <li>API 接口开发实战之轮播图管理模块接口开发</li>
-      <li>API 接口开发实战之商品分类管理模块接口开发</li>
-      <li>API 接口开发实战之商品管理模块接口开发</li>
-      <li>API 接口开发实战之商品配置管理模块接口开发</li>
-      <li>API 接口开发实战之订单管理模块接口开发</li>
-      <li>成为一名有独立开发能力的前端工程师</li>
-      <li>Vite 2.0 + Vue 3.0 + Element-plus 搭建管理后台项目</li>
-      <li>Vue 3.0 实战之管理后台左右栏目布局（Menu 菜单组件）</li>
-      <li>Vue 3.0 实战之登录鉴权（Form 表单组件）</li>
-      <li>Vue 3.0 实战之首页大盘数据（Echart 5.x）</li>
-      <li>Vue 3.0 实战之首页配置 Table</li>
-      <li>Vue 3.0 实战之分类管理（多级共用 Table）</li>
-      <li>Vue 3.0 实战之商品管理</li>
-      <li>Vue 3.0 实战之订单管理（操作多级判断）</li>
-      <li>Vue 3.0 实战之会员管理、账户修改</li>
-      <li>pm2 实现一键部署云端服务器</li>
-      <li>常见问题汇总讲解</li>
-    </ul>
-    <h1>技术选型</h1>
-    <ul style="font-weight: bold;">
-      <li>Vue 3.x</li>
-      <li>Vite 2.x</li>
-      <li>Vue-Router 4.x</li>
-      <li>Element-Plus（适配全新 Vue 3.x 的 PC 端组件库）</li>
-      <li>Echarts 5.0</li>
-      <li>axios</li>
-      <li>wangEditor</li>
-    </ul>
-    <h1>联系作者</h1>
-    <ul>
-      <li>我的邮箱：2449207463@qq.com</li>
-      <li>QQ技术交流群：932227898、707779034</li>
-    </ul>
-  </el-card>
+
+    <!-- 商品展示部分 -->
+    <div class="products-section">
+      <h2 class="section-title">推荐商品</h2>
+      <div class="products-grid">
+        <div class="product-card" v-for="product in products" :key="product.id">
+          <div class="product-image">
+            <img :src="product.image" alt="{{ product.name }}">
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">{{ product.name }}</h3>
+            <p class="product-description">{{ product.description }}</p>
+            <div class="product-footer">
+              <span class="product-price">¥{{ product.price.toFixed(2) }}</span>
+              <span class="product-promotion">{{ product.promotion }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
-const goJuejin = () => {
-  console.log('goJuejin')
-  window.open('https://juejin.cn/book/6933939264455442444', 'target')
-}
+import { ref } from 'vue'
+
+// 模拟商品数据
+const products = ref([
+  {
+    id: 1,
+    name: '智能音箱',
+    description: '高品质音效，智能语音助手',
+    price: 299.00,
+    promotion: '限时优惠',
+    image: 'https://picsum.photos/200/200?random=1'
+  },
+  {
+    id: 2,
+    name: '无线耳机',
+    description: '降噪功能，超长续航',
+    price: 399.00,
+    promotion: '买一送一',
+    image: 'https://picsum.photos/200/200?random=2'
+  },
+  {
+    id: 3,
+    name: '智能手机',
+    description: '高性能处理器，高清屏幕',
+    price: 2999.00,
+    promotion: '新品上市',
+    image: 'https://picsum.photos/200/200?random=3'
+  },
+  {
+    id: 4,
+    name: '平板电脑',
+    description: '轻薄便携，高清显示',
+    price: 1999.00,
+    promotion: '直降200',
+    image: 'https://picsum.photos/200/200?random=4'
+  },
+  {
+    id: 5,
+    name: '智能手表',
+    description: '健康监测，运动追踪',
+    price: 1299.00,
+    promotion: '满减优惠',
+    image: 'https://picsum.photos/200/200?random=5'
+  },
+  {
+    id: 6,
+    name: '笔记本电脑',
+    description: '轻薄设计，强劲性能',
+    price: 5999.00,
+    promotion: '学生优惠',
+    image: 'https://picsum.photos/200/200?random=6'
+  },
+  {
+    id: 7,
+    name: '智能电视',
+    description: '4K高清，智能系统',
+    price: 3999.00,
+    promotion: '限时折扣',
+    image: 'https://picsum.photos/200/200?random=7'
+  },
+  {
+    id: 8,
+    name: '无线充电器',
+    description: '快速充电，智能识别',
+    price: 99.00,
+    promotion: '买二送一',
+    image: 'https://picsum.photos/200/200?random=8'
+  },
+  {
+    id: 9,
+    name: '游戏手柄',
+    description: '无线连接，舒适握持',
+    price: 199.00,
+    promotion: '新品特惠',
+    image: 'https://picsum.photos/200/200?random=9'
+  },
+  {
+    id: 10,
+    name: '智能门锁',
+    description: '指纹识别，远程控制',
+    price: 899.00,
+    promotion: '安全保障',
+    image: 'https://picsum.photos/200/200?random=10'
+  }
+])
 </script>
+
 <style scoped>
-  .course {
-    font-weight: bold;
-    display: inline-block;
+.product-browse-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.swiper-section {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.carousel-item {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.carousel-text h3 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.carousel-text p {
+  font-size: 16px;
+}
+
+.products-section {
+  width: 100%;
+  padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+}
+
+.section-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+
+.product-card {
+  width: 100%;
+  max-width: 220px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.product-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+.product-info {
+  padding: 15px;
+}
+
+.product-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-description {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.product-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #e60012;
+}
+
+.product-promotion {
+  font-size: 12px;
+  color: white;
+  background-color: #ff6b6b;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
-  .course li {
-    line-height: 36px;
-    color: #409eff;
-    cursor: pointer;
+  
+  .product-card {
+    max-width: 180px;
   }
+  
+  .product-image {
+    height: 160px;
+  }
+}
 </style>

@@ -18,6 +18,11 @@ const router = createRouter({
       component: () => import(/* webpackChunkName: "dashboard" */ '../views/Index.vue')
     },
     {
+      path: '/sound-product',
+      name: 'soundProduct',
+      component: () => import(/* webpackChunkName: "soundProduct" */ '../views/SoundProduct.vue')
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
